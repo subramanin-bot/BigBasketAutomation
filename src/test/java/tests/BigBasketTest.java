@@ -12,6 +12,8 @@ import pages.ProductPage;
 import utils.ConfigReader;
 import utils.DriverFactory;
 
+import java.util.Map;
+
 public class BigBasketTest {
     private WebDriver driver;
     private HomePage homePage;
@@ -56,6 +58,22 @@ public class BigBasketTest {
         Assert.assertTrue(productPage.areProductsDisplayed("Amul"),
                 "brand filtered search results should be displayed.");
 
+    }
+
+    @Test
+    public void validateQuantityAndBasketAmount(){
+        homePage.open(ConfigReader.get("url"));
+        homePage.searchProduct("Milk");
+        productPage.areProductsDisplayed("Milk");
+        productPage.selectFirstProduct();
+        Map<String, Integer> product = productPage.CaptureProductnamePrice();
+        productPage.addProductIncreaseQuantityAndValidate();
+
+        homePage.searchProduct("Biscuits");
+        productPage.areProductsDisplayed("Biscuits");
+        productPage.selectFirstProduct();
+        Map<String, Integer> product1 = productPage.CaptureProductnamePrice();
+        productPage.addProductAndValidate();
     }
 
 
